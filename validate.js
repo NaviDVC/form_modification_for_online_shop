@@ -1,12 +1,15 @@
 const form = document.getElementById("ordering");
 const userName = form.elements["name"];
 const city = form.elements["city"];
+const payment = form.elements["payment"];
 const post = form.elements["post"];
 const count = form.elements["number"];
 const comment = form.elements["comment"];
+const radioErrorPlace = document.querySelector(".radio-error");
+
 
 const NAME_ERROR = "Please enter your name";
-const RADIO_ERROR = "Please choose your gender";
+const RADIO_ERROR = "Please choose the payment method";
 const CITY__ERROR = "Please choose your city";
 const POST_ERROR = "Please enter post office number";
 const COUNT_ERROR = "Please enter a valid quantity"
@@ -57,6 +60,31 @@ function validateName(el, message) {
   
   }
 
+  function validateRadio(elements, message) {
+
+    let selectedValue;
+  
+    for (const radio of elements) {
+  
+      if (radio.checked) {
+        selectedValue = radio.value;
+        break;
+      }
+  
+    }
+  
+    if (selectedValue) {
+  
+      showSuccess(radioErrorPlace);
+      return true;
+  
+    } else {
+  
+      showError(radioErrorPlace, RADIO_ERROR);
+  
+    }
+  }
+
   function validatePost(el, message) {
 
     if (el.value !== "") {
@@ -98,27 +126,34 @@ function validateName(el, message) {
 
     const isCountValid = validateCount(count, COUNT_ERROR);
   
-    let nameValue = userName.value;
-    let cityValue = city.value;
-    let postValue = post.value;
-    let countValue = count.value;
-    let commentValue = comment.value;
+    const isPaymentChecked = validateRadio(payment, RADIO_ERROR);
 
-    if (isNameValid && isCityChecked && isPostChecked && isCountValid && commentValue !== ''){
+
+    const nameValue = userName.value;
+    const cityValue = city.value;
+    const postValue = post.value;
+    const countValue = count.value;
+    const commentValue = comment.value;
+    const paymentValue = payment.value;
+    
+
+    if (isNameValid && isCityChecked && isPaymentChecked && isPostChecked && isCountValid && commentValue !== ''){
         if(confirm(`Hello, ${nameValue}!\n
           Please, check your order information:\n
           City: ${cityValue}!\n
+          Payment method: ${paymentValue}\n
           Post office number: ${postValue}!\n
           Quantity: ${countValue}!\n
           Comment: ${commentValue}`)){
             location.reload();
           }
-    } else if (isNameValid && isCityChecked && isPostChecked && isCountValid) {
+    } else if (isNameValid && isCityChecked && isPaymentChecked && isPostChecked && isCountValid) {
 
       if (confirm(`Hello, ${nameValue}!\n
       Please, check your order information:\n
       You want to buy ${window.name}\n
       City: ${cityValue}!\n
+      Payment method: ${paymentValue}\n
       Post office number: ${postValue}!\n
       Quantity: ${countValue}!`)) {
         location.reload();

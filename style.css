@@ -4,6 +4,10 @@
   color: black;
 }
 
+small {
+  color: rgba(255, 0, 0, 0.849);
+}
+
 .items__block {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -145,6 +149,11 @@
   height: 27px;
   text-align: center;
   color: rgba(138, 138, 1, 0.993);
+}
+
+.buy_form #cash {
+  margin-left: 30px;
+  margin-bottom: 20px;
 }
 
 .buy_form #post {
